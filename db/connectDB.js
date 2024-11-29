@@ -7,13 +7,11 @@ const connectDB = async (req, res) => {
         await mongoose
             .connect(process.env.MONGO_URL)
             .then(() => {
-                console.log("Connected to Database")
-            })
+                console.log("Connected to Database");
+            });
     
     } catch (error) {
-        res.send(400).json({
-            message: "Not Connected to DB"
-        });    
+        console.error(error);
     }
 };
 
