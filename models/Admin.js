@@ -12,7 +12,13 @@ const AdminSchema = new  mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    post: [
+        {
+            type:mongoose.Types.ObjectId,
+            ref: "Post",
+        }
+    ]
 });
 
 module.exports = mongoose.model("Admin", AdminSchema);
