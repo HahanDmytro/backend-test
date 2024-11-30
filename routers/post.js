@@ -22,12 +22,24 @@ router.post('/addPost', async (req, res) => {
     
 });
 
+// all the posts
 router.get('/allPost', async (req, res) => {
     try {
         const posts = await Post.find({});
         res.status(200).json({posts});
     } catch (error) {
         res.status(200).json({ message: "Note Exist Posts" })
+    }
+});
+
+// update post
+router.put('/updatePost/:id', async (req, res) => {
+    try {
+        const { title, body } = req.body;
+        const post = await Post.findByIdAndUpdate(req.params.id, {title, body});
+        post.save().then(() => res.status(200).json({post}))
+    } catch (error) {
+        res.status(200).json({ message: "Something wrong" })
     }
 });
 
