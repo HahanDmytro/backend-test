@@ -22,4 +22,13 @@ router.post('/addPost', async (req, res) => {
     
 });
 
+router.get('/allPost', async (req, res) => {
+    try {
+        const posts = await Post.find({});
+        res.status(200).json({posts});
+    } catch (error) {
+        res.status(200).json({ message: "Note Exist Posts" })
+    }
+});
+
 module.exports = router;
