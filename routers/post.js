@@ -43,4 +43,22 @@ router.put('/updatePost/:id', async (req, res) => {
     }
 });
 
+// delete post
+router.delete('/deletePost/:id', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const AdminExist = await Admin.findOneAndUpdate({ email }, {
+            $pull: {post: req.params.id}
+        });
+        if (AdminExist) {
+            await Post.findByIdAndDelete(req.params.id).then(() => {
+                res.status(200).json({ message: "The post is deleted" });
+            });
+        }
+        
+    } catch (error) {
+        res.status(200).json({ message: "The post is not deleted" });
+    }
+});
+
 module.exports = router;
