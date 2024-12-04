@@ -5,8 +5,8 @@ const Admin = require("../models/Admin.js");
 //created posts
 router.post('/addPost', async (req, res) => {
     try {
-        const { email, title, body } = req.body;
-        const AdminExist = await Admin.findOne({email});
+        const { id, title, body } = req.body;
+        const AdminExist = await Admin.findById(id);
         if (AdminExist) {
             const post = new Post({ title, body, author: AdminExist });
             await post.save().then(() => res.status(200).json({ post }));

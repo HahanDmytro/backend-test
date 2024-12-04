@@ -19,20 +19,21 @@ router.post('/signin', async (req, res) => {
     try {
         const admin = await Admin.findOne({ email: req.body.email });
         if (!admin) {
-            res.status(400).json({ message: "Registred before" });
+            return res.status(404).json({ message: "Registred before" });
         }
 
-        const isCorrectPassword = bcrypt.compareSync(
+        const isCorrectPassword = await bcrypt.compare(
             req.body.password,
             admin.password
         );
         if (!isCorrectPassword) {
-            res.status(400).json({ message: "The password inCorrect" });
+            return res.status(401).json({ message: "The password inCorrect" });
         }
         const { password, ...others } = admin._doc;
-        res.stauts(200).json({ others });
-    } catch (error) {
-        res.status(400).json({ message: 'User Already exist' })
+        return res.status(200).json({ others });
+    } catch (error){
+        res.status(500).json(error)
+        console.error(error);
     }
 });
 
