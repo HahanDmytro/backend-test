@@ -25,7 +25,7 @@ router.post('/addPost', async (req, res) => {
 // all the posts
 router.get('/allPost', async (req, res) => {
     try {
-        const posts = await Post.find({});
+        const posts = await Post.find({}).sort({createdAt: -1});
         res.status(200).json({posts});
     } catch (error) {
         res.status(200).json({ message: "Note Exist Posts" })
@@ -46,8 +46,8 @@ router.put('/updatePost/:id', async (req, res) => {
 // delete post
 router.delete('/deletePost/:id', async (req, res) => {
     try {
-        const { email } = req.body;
-        const AdminExist = await Admin.findOneAndUpdate({ email }, {
+        const { id } = req.body;
+        const AdminExist = await Admin.findByIdAndUpdate( id, {
             $pull: {post: req.params.id}
         });
         if (AdminExist) {
