@@ -1,6 +1,6 @@
 require('dotenv');
 const cloudinary = require('cloudinary').v2;
-const cloudinaryStorage = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Cloudinary config
 cloudinary.config({
@@ -9,7 +9,7 @@ cloudinary.config({
     api_secret:process.env.API_SECRET
 });
 
-const storage = new cloudinaryStorage({
+const storage = new CloudinaryStorage({
     cloudinary:cloudinary,
     params: {
         folder: 'uploads',

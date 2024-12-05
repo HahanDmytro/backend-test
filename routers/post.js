@@ -7,18 +7,19 @@ const { storage } = require('../db/connectImg.js');
 const upload = multer({ storage });
 
 //created posts
-router.post('/addPost', async (req, res) => {
+router.post('/addPost', upload.single('image'), async (req, res) => {
     try {
+        
         const { id, title, body } = req.body;
         const AdminExist = await Admin.findById(id);
         if (AdminExist) {
-            const post = new Post({ title, body, author: AdminExist, imageUrl: req.file?.paht || '' });
+            const post = new Post({ title, body, author: AdminExist, imageUrl: req.file.path || ''});
             await post.save().then(() => res.status(200).json({ post }));
             AdminExist.post.push(post);
             AdminExist.save();
             
         } else {
-            res.status(200).json({message: "Amin is not Exist"});
+            res.status(200).json({message: "Admin is not Exist"});
         }
     } catch (error) {
         res.status(200).json({message: "post didn't save"});

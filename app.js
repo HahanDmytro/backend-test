@@ -1,6 +1,6 @@
 require("dotenv").config();
 require("./db/connectDB");
-
+const bodyParser = require('body-parser');
 
 const express = require("express");
 const cors = require("cors");
@@ -14,6 +14,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api/v1', auth);
