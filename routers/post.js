@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const Post = require("../models/post.js");
 const Admin = require("../models/Admin.js");
+const multer = require('multer');
+const { storage } = require('../db/connectImg.js');
 
+const upload = multer({ storage });
 
 //created posts
 router.post('/addPost', async (req, res) => {
@@ -9,7 +12,7 @@ router.post('/addPost', async (req, res) => {
         const { id, title, body } = req.body;
         const AdminExist = await Admin.findById(id);
         if (AdminExist) {
-            const post = new Post({ title, body, author: AdminExist });
+            const post = new Post({ title, body, author: AdminExist, imageUrl: req.file?.paht || '' });
             await post.save().then(() => res.status(200).json({ post }));
             AdminExist.post.push(post);
             AdminExist.save();
