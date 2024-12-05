@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Post = require("../models/post.js");
 const Admin = require("../models/Admin.js");
 
+
 //created posts
 router.post('/addPost', async (req, res) => {
     try {
