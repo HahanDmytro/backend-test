@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        imageUrl : { type: String },
         author: [
             {
                 type:mongoose.Types.ObjectId,
