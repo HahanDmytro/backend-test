@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.get('/', (req, res) => {
+    res.send("<h1>Wellcom to page</h1>")
+})
 app.use('/api/v1', auth);
 app.use('/api/v2', post);
 
