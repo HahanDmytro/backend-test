@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const auth = require("./routers/auth.js");
 const post = require('./routers/post.js');
+const payment = require('./routers/donate.js') 
 
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/v1', auth);
 app.use('/api/v2', post);
+app.use('/api/v3', payment);
 
 app.listen(port, () => {
     console.log(`The server running in : ${port}`);
