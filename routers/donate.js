@@ -6,10 +6,10 @@ require("dotenv").config();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post("/payment", async (req, res) => {
-    const { amout } = req.body;
+    const { amount } = req.body;
     try {
         const paymentIntent = await stripe.paymentIntents.create({
-            amout,
+            amount,
             currency: "usd",
             payment_method_types: ["card"],
         });
