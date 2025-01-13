@@ -14,7 +14,7 @@ router.post("/payment", async (req, res) => {
             payment_method_types: ["card"],
         });
         res.json({
-            clientSecret: paymentIntent,
+            clientSecret: paymentIntent.client_secret,
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
