@@ -13,7 +13,7 @@ router.post("/payment", async (req, res) => {
             currency: "usd",
             payment_method_types: ["card"],
         });
-        res.send({
+        res.json({
             clientSecret: paymentIntent,
         });
     } catch (error) {
