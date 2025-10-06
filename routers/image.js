@@ -29,7 +29,19 @@ router.post('/addImage/:id', upload.single('image'), async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.json({ success: true })
+        res.json({ success: true })
+    }
+});
+//getImages
+// all the posts
+router.get('/getImages/:id', async (req, res) => {
+    try {
+        const images = await Image.find({post: req.params.id});
+            
+
+        res.status(200).json({images});
+    } catch (error) {
+        res.json({ succcess: true })
     }
 });
 
