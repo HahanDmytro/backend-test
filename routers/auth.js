@@ -1,15 +1,26 @@
+require("dotenv").config();
 const router = require("express").Router();
 const Admin = require('../models/Admin.js');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+
+const secretPassword = bcrypt.hashSync(process.env.SECRET_PASSWORD);
 
 router.post('/reqister', async (req, res) => {
     try {
-        const {email, usename, password} = req.body;
-        const hashpassword = bcrypt.hashSync(password);
-        const admin = new Admin({ email, usename, password: hashpassword });
-        await admin.save().then(() => {
-            res.status(200).json({ admin });
-        })
+        const {email, usename, password, serverpassword} = req.body;
+        const isSecretPassword = await bcrypt.compare(
+            req.body.serverpassword,
+            secretPassword
+        );
+        if (!isSecretPassword) {
+            return res.status(401).json({ message: "The server password is incorrect" });
+        } else {
+            const hashpassword = bcrypt.hashSync(password);
+            const admin = new Admin({ email, usename, password: hashpassword });
+            await admin.save().then(() => {
+                res.status(200).json({ admin });
+            });
+        }
     } catch (error) {
         res.stauts(200).json({ message: "Admin whith this usename is exist" });
     }
